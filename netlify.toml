@@ -1,0 +1,11 @@
+[build]
+  publish = "frontend"
+
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
+
+[[redirects]]
+  from = "/frontend/*"
+  to = "/:splat"
+  status = 301

@@ -1,0 +1,242 @@
+[
+  {
+    "date_time": "2018-07-28 00:00",
+    "is_indoor": 0,
+    "temp_lag_1": -10,
+    "expected": 35.3
+  },
+  {
+    "date_time": "2018-07-28 00:00",
+    "is_indoor": 0,
+    "temp_lag_1": 24,
+    "expected": 35.3
+  },
+  {
+    "date_time": "2018-07-28 00:00",
+    "is_indoor": 0,
+    "temp_lag_1": 30.1234567,
+    "expected": 31.33
+  },
+  {
+    "date_time": "2018-07-28 00:00",
+    "is_indoor": 0,
+    "temp_lag_1": 45,
+    "expected": 45.88
+  },
+  {
+    "date_time": "2018-07-28 00:00",
+    "is_indoor": 0,
+    "temp_lag_1": 70,
+    "expected": 48.05
+  },
+  {
+    "date_time": "2018-07-28 00:00",
+    "is_indoor": 1,
+    "temp_lag_1": -10,
+    "expected": 27.87
+  },
+  {
+    "date_time": "2018-07-28 00:00",
+    "is_indoor": 1,
+    "temp_lag_1": 24,
+    "expected": 27.87
+  },
+  {
+    "date_time": "2018-07-28 00:00",
+    "is_indoor": 1,
+    "temp_lag_1": 30.1234567,
+    "expected": 31.66
+  },
+  {
+    "date_time": "2018-07-28 00:00",
+    "is_indoor": 1,
+    "temp_lag_1": 45,
+    "expected": 33.49
+  },
+  {
+    "date_time": "2018-07-28 00:00",
+    "is_indoor": 1,
+    "temp_lag_1": 70,
+    "expected": 33.35
+  },
+  {
+    "date_time": "2018-10-05 02:30",
+    "is_indoor": 0,
+    "temp_lag_1": -10,
+    "expected": 44.91
+  },
+  {
+    "date_time": "2018-10-05 02:30",
+    "is_indoor": 0,
+    "temp_lag_1": 24,
+    "expected": 44.91
+  },
+  {
+    "date_time": "2018-10-05 02:30",
+    "is_indoor": 0,
+    "temp_lag_1": 30.1234567,
+    "expected": 42.66
+  },
+  {
+    "date_time": "2018-10-05 02:30",
+    "is_indoor": 0,
+    "temp_lag_1": 45,
+    "expected": 45.18
+  },
+  {
+    "date_time": "2018-10-05 02:30",
+    "is_indoor": 0,
+    "temp_lag_1": 70,
+    "expected": 47.96
+  },
+  {
+    "date_time": "2018-10-05 02:30",
+    "is_indoor": 1,
+    "temp_lag_1": -10,
+    "expected": 26.27
+  },
+  {
+    "date_time": "2018-10-05 02:30",
+    "is_indoor": 1,
+    "temp_lag_1": 24,
+    "expected": 26.27
+  },
+  {
+    "date_time": "2018-10-05 02:30",
+    "is_indoor": 1,
+    "temp_lag_1": 30.1234567,
+    "expected": 31.01
+  },
+  {
+    "date_time": "2018-10-05 02:30",
+    "is_indoor": 1,
+    "temp_lag_1": 45,
+    "expected": 34.35
+  },
+  {
+    "date_time": "2018-10-05 02:30",
+    "is_indoor": 1,
+    "temp_lag_1": 70,
+    "expected": 34.25
+  },
+  {
+    "date_time": "2018-12-08 23:59",
+    "is_indoor": 0,
+    "temp_lag_1": -10,
+    "expected": 45.66
+  },
+  {
+    "date_time": "2018-12-08 23:59",
+    "is_indoor": 0,
+    "temp_lag_1": 24,
+    "expected": 45.74
+  },
+  {
+    "date_time": "2018-12-08 23:59",
+    "is_indoor": 0,
+    "temp_lag_1": 30.1234567,
+    "expected": 42.61
+  },
+  {
+    "date_time": "2018-12-08 23:59",
+    "is_indoor": 0,
+    "temp_lag_1": 45,
+    "expected": 44.95
+  },
+  {
+    "date_time": "2018-12-08 23:59",
+    "is_indoor": 0,
+    "temp_lag_1": 70,
+    "expected": 48.08
+  },
+  {
+    "date_time": "2018-12-08 23:59",
+    "is_indoor": 1,
+    "temp_lag_1": -10,
+    "expected": 25.48
+  },
+  {
+    "date_time": "2018-12-08 23:59",
+    "is_indoor": 1,
+    "temp_lag_1": 24,
+    "expected": 25.48
+  },
+  {
+    "date_time": "2018-12-08 23:59",
+    "is_indoor": 1,
+    "temp_lag_1": 30.1234567,
+    "expected": 31.3
+  },
+  {
+    "date_time": "2018-12-08 23:59",
+    "is_indoor": 1,
+    "temp_lag_1": 45,
+    "expected": 34.67
+  },
+  {
+    "date_time": "2018-12-08 23:59",
+    "is_indoor": 1,
+    "temp_lag_1": 70,
+    "expected": 34.63
+  },
+  {
+    "date_time": "2026-11-03 14:00",
+    "is_indoor": 0,
+    "temp_lag_1": -10,
+    "expected": 46.11
+  },
+  {
+    "date_time": "2026-11-03 14:00",
+    "is_indoor": 0,
+    "temp_lag_1": 24,
+    "expected": 46.2
+  },
+  {
+    "date_time": "2026-11-03 14:00",
+    "is_indoor": 0,
+    "temp_lag_1": 30.1234567,
+    "expected": 47.66
+  },
+  {
+    "date_time": "2026-11-03 14:00",
+    "is_indoor": 0,
+    "temp_lag_1": 45,
+    "expected": 45.35
+  },
+  {
+    "date_time": "2026-11-03 14:00",
+    "is_indoor": 0,
+    "temp_lag_1": 70,
+    "expected": 48.22
+  },
+  {
+    "date_time": "2026-11-03 14:00",
+    "is_indoor": 1,
+    "temp_lag_1": -10,
+    "expected": 27.16
+  },
+  {
+    "date_time": "2026-11-03 14:00",
+    "is_indoor": 1,
+    "temp_lag_1": 24,
+    "expected": 27.16
+  },
+  {
+    "date_time": "2026-11-03 14:00",
+    "is_indoor": 1,
+    "temp_lag_1": 30.1234567,
+    "expected": 31.48
+  },
+  {
+    "date_time": "2026-11-03 14:00",
+    "is_indoor": 1,
+    "temp_lag_1": 45,
+    "expected": 33.15
+  },
+  {
+    "date_time": "2026-11-03 14:00",
+    "is_indoor": 1,
+    "temp_lag_1": 70,
+    "expected": 33.58
+  }
+]
