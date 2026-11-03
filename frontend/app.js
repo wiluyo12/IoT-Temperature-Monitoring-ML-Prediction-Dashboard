@@ -4,9 +4,7 @@
  */
 
 // API Configuration
-const API_BASE = window.location.origin.includes('8000') || window.location.origin.includes('localhost')
-  ? '' 
-  : 'http://127.0.0.1:8000';
+const API_BASE = '';
 
 // State Management
 const state = {
@@ -212,6 +210,7 @@ async function loadDashboardData() {
   try {
     // 1. Fetch Stats
     const statsRes = await fetch(`${API_BASE}/api/stats`);
+    if (!statsRes.ok) throw new Error(`Stats API returned ${statsRes.status}`);
     if (statsRes.ok) {
       state.stats = await statsRes.json();
       populateKPIs(state.stats);
@@ -219,6 +218,7 @@ async function loadDashboardData() {
 
     // 2. Fetch Charts Payload
     const chartsRes = await fetch(`${API_BASE}/api/charts`);
+    if (!chartsRes.ok) throw new Error(`Charts API returned ${chartsRes.status}`);
     if (chartsRes.ok) {
       state.dashboardData = await chartsRes.json();
       renderCharts(state.dashboardData);
