@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IoT Temperature Intelligence & ML Prediction Dashboard</title>
+  <meta name="description" content="CRISP-DM Industrial IoT Temperature Monitoring and Machine Learning Predictive Analytics Dashboard">
+  
+  <!-- Modern Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- Chart.js for High-performance Canvas Visualizations -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
+  
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Top Navigation Header -->
+    <header class="dashboard-header">
+      <div class="header-left">
+        <div class="brand-logo">
+          <div class="logo-icon-wrap">
+            <i class="fa-solid fa-microchip"></i>
+            <span class="pulse-ring"></span>
+          </div>
+          <div class="brand-meta">
+            <h1>ThermoCast <span class="badge-iot">IoT ML</span></h1>
+            <p class="brand-sub">IoT Temperature Monitoring & Machine Learning Predictor</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="header-right">
+        <div class="clock-display" id="clockDisplay">
+          <span class="clock-time">--:--:--</span>
+          <span class="clock-date">---, -- --- ----</span>
+        </div>
+        <button class="btn btn-theme-toggle" id="themeToggleBtn" type="button" onclick="toggleTheme()" title="Ganti Mode Terang / Gelap">
+          <i class="fa-solid fa-moon" id="themeToggleIcon"></i>
+          <span id="themeToggleText">Dark Mode</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <nav class="nav-tabs">
+      <button class="nav-tab active" data-tab="tab-overview">
+        <i class="fa-solid fa-chart-line"></i> Live Telemetry & Trends
+      </button>
+      <button class="nav-tab" data-tab="tab-predictor">
+        <i class="fa-solid fa-wand-magic-sparkles"></i> AI What-If Predictor
+      </button>
+      <button class="nav-tab" data-tab="tab-evaluation">
+        <i class="fa-solid fa-scale-balanced"></i> Model Comparison & Evaluation
+      </button>
+      <button class="nav-tab" data-tab="tab-logs">
+        <i class="fa-solid fa-database"></i> Sensor Data Explorer
+      </button>
+    </nav>
+
+    <!-- Main Content Body -->
+    <main class="dashboard-main">
+      <!-- KPI Ribbon Cards -->
+      <section class="kpi-grid">
+        <!-- Card 1: Total Dataset Points -->
+        <div class="kpi-card" id="kpiTotal">
+          <div class="kpi-header">
+            <span class="kpi-title">Total IoT Readings</span>
+            <div class="kpi-icon icon-cyan"><i class="fa-solid fa-database"></i></div>
+          </div>
+          <div class="kpi-value-wrap">
+            <h2 class="kpi-value" id="valTotalReadings">97,606</h2>
+            <span class="kpi-badge badge-cyan">Validated</span>
+          </div>
+          <div class="kpi-footer">
+            <span class="kpi-subtext" id="kpiDateRange">Jul 28 – Dec 08, 2018</span>
+            <span class="kpi-highlight"><i class="fa-solid fa-filter"></i> 0 outliers</span>
+          </div>
+        </div>
+
+        <!-- Card 2: Overall Mean Temp -->
+        <div class="kpi-card" id="kpiAvg">
+          <div class="kpi-header">
+            <span class="kpi-title">Average Fleet Temp</span>
+            <div class="kpi-icon icon-emerald"><i class="fa-solid fa-temperature-half"></i></div>
+          </div>
+          <div class="kpi-value-wrap">
+            <h2 class="kpi-value" id="valAvgTemp">35.05<span class="kpi-unit">°C</span></h2>
+            <span class="kpi-badge badge-emerald" id="valComfortBadge">Warm</span>
+          </div>
+          <div class="kpi-footer">
+            <span class="kpi-subtext">Std Dev: <strong id="valStdTemp">±5.70°C</strong></span>
+            <span class="kpi-highlight" id="valMinMaxRange">21.0° – 51.0°C</span>
+          </div>
+        </div>
+
+        <!-- Card 3: Indoor vs Outdoor Gradient -->
+        <div class="kpi-card" id="kpiGradient">
+          <div class="kpi-header">
+            <span class="kpi-title">Indoor vs Outdoor Split</span>
+            <div class="kpi-icon icon-amber"><i class="fa-solid fa-house-laptop"></i></div>
+          </div>
+          <div class="kpi-value-wrap">
+            <div class="dual-value">
+              <div class="sub-val">
+                <span class="lbl"><i class="fa-solid fa-door-closed"></i> In:</span>
+                <span class="val" id="valIndoorAvg">30.45°C</span>
+              </div>
+              <div class="divider">/</div>
+              <div class="sub-val">
+                <span class="lbl"><i class="fa-solid fa-sun"></i> Out:</span>
+                <span class="val" id="valOutdoorAvg">36.27°C</span>
+              </div>
+            </div>
+          </div>
+          <div class="kpi-footer">
+            <span class="kpi-subtext">Outdoor Gradient: <strong id="valGradientDiff">+5.82°C</strong></span>
+            <span class="kpi-highlight" id="valCounts">21% In / 79% Out</span>
+          </div>
+        </div>
+
+        <!-- Card 4: ML Champion Model (Random Forest) -->
+        <div class="kpi-card" id="kpiModel">
+          <div class="kpi-header">
+            <span class="kpi-title">Random Forest Accuracy</span>
+            <div class="kpi-icon icon-purple"><i class="fa-solid fa-brain"></i></div>
+          </div>
+          <div class="kpi-value-wrap">
+            <h2 class="kpi-value" id="valRfMae">2.65<span class="kpi-unit">°C MAE</span></h2>
+            <span class="kpi-badge badge-purple">R² 0.448</span>
+          </div>
+          <div class="kpi-footer">
+            <span class="kpi-subtext">RMSE: <strong id="valRfRmse">3.99 °C</strong></span>
+            <span class="kpi-highlight"><i class="fa-solid fa-trophy"></i> Best Model</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 1: OVERVIEW & TELEMETRY -->
+      <section class="tab-panel active" id="tab-overview">
+        <div class="grid-layout-2-col">
+          <!-- Primary Chronological Timeline -->
+          <div class="glass-panel main-chart-panel">
+            <div class="panel-header">
+              <div class="panel-title-group">
+                <h3><i class="fa-solid fa-chart-area"></i> Sequential IoT Temperature Chrono-Stream</h3>
+                <p class="panel-desc">Time series progression of sensor telemetry with Indoor/Outdoor classification</p>
+              </div>
+              <div class="panel-actions">
+                <div class="pill-group" id="chartFilterGroup">
+                  <button class="pill-btn active" data-filter="all">All (150)</button>
+                  <button class="pill-btn" data-filter="Indoor">Indoor Only</button>
+                  <button class="pill-btn" data-filter="Outdoor">Outdoor Only</button>
+                </div>
+              </div>
+            </div>
+            <div class="chart-canvas-container">
+              <canvas id="timeSeriesChart"></canvas>
+            </div>
+          </div>
+
+          <!-- Secondary Diurnal Circadian Cycle Chart -->
+          <div class="glass-panel side-chart-panel">
+            <div class="panel-header">
+              <div class="panel-title-group">
+                <h3><i class="fa-solid fa-clock-rotate-left"></i> Diurnal Circadian Curve (24h)</h3>
+                <p class="panel-desc">Mean hourly temperature pattern showing solar thermal absorption</p>
+              </div>
+            </div>
+            <div class="chart-canvas-container">
+              <canvas id="diurnalChart"></canvas>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 2: AI WHAT-IF PREDICTOR -->
+      <section class="tab-panel" id="tab-predictor">
+        <div class="predictor-container">
+          <!-- Left: Input Control Dashboard -->
+          <div class="glass-panel predictor-input-card">
+            <div class="panel-header">
+              <div class="panel-title-group">
+                <h3><i class="fa-solid fa-sliders"></i> Sensor Conditions & Environmental Parameters</h3>
+                <p class="panel-desc">Configure features to evaluate the Random Forest inference engine</p>
+              </div>
+            </div>
+
+            <!-- Quick Presets -->
+            <div class="preset-ribbon">
+              <span class="preset-label"><i class="fa-solid fa-bolt"></i> Quick Presets:</span>
+              <button class="preset-pill" data-preset="summer-noon">Summer Noon Outdoor (42°C)</button>
+              <button class="preset-pill" data-preset="ac-indoor">AC Office Room (24°C)</button>
+              <button class="preset-pill" data-preset="night-breeze">Late Night Outdoor (28°C)</button>
+            </div>
+
+            <form id="predictionForm" class="predictor-form">
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="inputDateTime"><i class="fa-regular fa-calendar-days"></i> Reading Date & Time</label>
+                  <input type="datetime-local" id="inputDateTime" class="form-input" required>
+                  <span class="input-hint">Extracts: Hour, Day, Month, Weekend status & Sin/Cos continuous cyclic features</span>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label><i class="fa-solid fa-location-dot"></i> Sensor Placement</label>
+                  <div class="segmented-control" id="locationSegmented">
+                    <button type="button" class="segment-btn active" data-val="1">
+                      <i class="fa-solid fa-house-chimney"></i> Indoor Room
+                    </button>
+                    <button type="button" class="segment-btn" data-val="0">
+                      <i class="fa-solid fa-sun-plant-wilt"></i> Outdoor Environment
+                    </button>
+                  </div>
+                  <input type="hidden" id="inputIsIndoor" value="1">
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <div class="slider-label-group">
+                    <label for="inputTempLag"><i class="fa-solid fa-clock-rotate-left"></i> Previous Reading Temp (t-1 lag)</label>
+                    <span class="slider-val-bubble" id="lagValDisplay">30.0 °C</span>
+                  </div>
+                  <input type="range" id="inputTempLag" class="form-slider" min="15.0" max="50.0" step="0.5" value="30.0">
+                  <span class="input-hint">High feature importance (84.32% model weight) in thermal inertia</span>
+                </div>
+              </div>
+
+              <button type="submit" class="btn btn-primary btn-submit-prediction" id="btnSubmitPredict">
+                <i class="fa-solid fa-sparkles"></i>
+                <span>Compute AI Temperature Prediction</span>
+              </button>
+            </form>
+          </div>
+
+          <!-- Right: Visualized Prediction Output -->
+          <div class="glass-panel predictor-result-card">
+            <div class="panel-header">
+              <div class="panel-title-group">
+                <h3><i class="fa-solid fa-gauge-high"></i> Random Forest Inference Result</h3>
+                <p class="panel-desc">Real-time model prediction with 95% confidence boundary</p>
+              </div>
+              <span class="model-badge"><i class="fa-solid fa-tree"></i> RF Regressor (100 Trees)</span>
+            </div>
+
+            <div class="result-display-wrapper">
+              <!-- Visual Thermo Gauge -->
+              <div class="gauge-container">
+                <div class="gauge-circle-outer">
+                  <div class="gauge-dial" id="gaugeDial">
+                    <div class="gauge-indicator-pin" id="gaugePin"></div>
+                  </div>
+                  <div class="gauge-inner-card">
+                    <span class="gauge-sub">Predicted Temp</span>
+                    <h1 class="gauge-value" id="resultPredictedTemp">30.45<span class="gauge-unit">°C</span></h1>
+                    <span class="comfort-status-badge" id="resultComfortBadge">Comfortable</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Confidence Band & Metric Cards -->
+              <div class="prediction-meta-grid">
+                <div class="meta-card">
+                  <span class="meta-label">Confidence Interval (± RMSE)</span>
+                  <span class="meta-val" id="resultConfInterval">26.46°C — 34.44°C</span>
+                </div>
+                <div class="meta-card">
+                  <span class="meta-label">Variance to Fleet Avg</span>
+                  <span class="meta-val" id="resultDeltaAvg">-4.60 °C (Cooler)</span>
+                </div>
+              </div>
+
+              <!-- Extracted Feature Vector Preview -->
+              <div class="feature-vector-box">
+                <div class="vector-header">
+                  <span>Engineered Feature Vector fed to scikit-learn:</span>
+                </div>
+                <div class="vector-chips" id="featureChips">
+                  <span class="chip">hour: 14</span>
+                  <span class="chip">month: 8</span>
+                  <span class="chip">is_indoor: 1</span>
+                  <span class="chip">hour_sin: -0.50</span>
+                  <span class="chip">temp_lag_1: 30.0°C</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 3: MODEL EVALUATION & CRISP-DM -->
+      <section class="tab-panel" id="tab-evaluation">
+        <div class="grid-layout-2-col">
+          <!-- Model Comparison Chart & Metrics -->
+          <div class="glass-panel">
+            <div class="panel-header">
+              <div class="panel-title-group">
+                <h3><i class="fa-solid fa-chart-column"></i> Multi-Model Regression Benchmark</h3>
+                <p class="panel-desc">Comparison on 20% unseen chronological test partition (19,522 records)</p>
+              </div>
+            </div>
+            
+            <div class="model-comparison-table-wrap">
+              <table class="benchmark-table">
+                <thead>
+                  <tr>
+                    <th>Algorithm</th>
+                    <th>MAE (°C)</th>
+                    <th>RMSE (°C)</th>
+                    <th>R² Score</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="modelBenchmarkBody">
+                  <tr>
+                    <td><i class="fa-solid fa-lines-leaning"></i> Linear Regression</td>
+                    <td>3.5443</td>
+                    <td>4.7559</td>
+                    <td>0.2149</td>
+                    <td><span class="badge badge-gray">Baseline</span></td>
+                  </tr>
+                  <tr>
+                    <td><i class="fa-solid fa-diagram-project"></i> Decision Tree Regressor</td>
+                    <td>2.9637</td>
+                    <td>4.5931</td>
+                    <td>0.2677</td>
+                    <td><span class="badge badge-amber">Intermediate</span></td>
+                  </tr>
+                  <tr class="highlight-row">
+                    <td><i class="fa-solid fa-tree"></i> <strong>Random Forest Regressor</strong></td>
+                    <td><strong>2.6533</strong></td>
+                    <td><strong>3.9883</strong></td>
+                    <td><strong>0.4479</strong></td>
+                    <td><span class="badge badge-emerald"><i class="fa-solid fa-check"></i> Champion</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="chart-canvas-container mt-4">
+              <canvas id="modelComparisonChart"></canvas>
+            </div>
+          </div>
+
+          <!-- Feature Importance Ranking -->
+          <div class="glass-panel">
+            <div class="panel-header">
+              <div class="panel-title-group">
+                <h3><i class="fa-solid fa-list-check"></i> Feature Importance Breakdown</h3>
+                <p class="panel-desc">Gini impurity reduction across 100 Random Forest decision estimators</p>
+              </div>
+            </div>
+            <div class="chart-canvas-container">
+              <canvas id="featureImportanceChart"></canvas>
+            </div>
+            <div class="feature-insight-note">
+              <i class="fa-solid fa-lightbulb"></i>
+              <p><strong>Thermal Lag Dominance:</strong> Previous temperature reading (`temp_lag_1`) carries <strong>84.3%</strong> feature weight, confirming heavy thermal inertia in ambient IoT spaces.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 4: SENSOR DATA EXPLORER -->
+      <section class="tab-panel" id="tab-logs">
+        <div class="glass-panel">
+          <div class="panel-header">
+            <div class="panel-title-group">
+              <h3><i class="fa-solid fa-table-list"></i> Recent Sensor Chronology Logs</h3>
+              <p class="panel-desc">Inspecting chronological IoT time-series readings with location tags and thermal classification</p>
+            </div>
+            <div class="panel-actions">
+              <div class="search-input-wrap">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" id="logSearchInput" placeholder="Search timestamp or location..." class="form-input search-input">
+              </div>
+              <button class="btn btn-outline" id="btnExportCsv">
+                <i class="fa-solid fa-file-arrow-down"></i> Export Sample CSV
+              </button>
+            </div>
+          </div>
+
+          <div class="table-responsive">
+            <table class="data-log-table" id="sensorLogsTable">
+              <thead>
+                <tr>
+                  <th>Timestamp</th>
+                  <th>Location</th>
+                  <th>Hour (24h)</th>
+                  <th>Recorded Temp</th>
+                  <th>Thermal Classification</th>
+                  <th>Model Next Step Pred</th>
+                </tr>
+              </thead>
+              <tbody id="sensorLogsTableBody">
+                <!-- Dynamically populated -->
+              </tbody>
+            </table>
+          </div>
+          <div class="table-pagination">
+            <span class="pagination-info" id="paginationInfo">Showing 1 to 15 of 150 entries</span>
+            <div class="pagination-controls">
+              <button class="btn-page" id="btnPrevPage" disabled><i class="fa-solid fa-chevron-left"></i> Prev</button>
+              <span class="page-current" id="pageIndicator">Page 1 of 10</span>
+              <button class="btn-page" id="btnNextPage">Next <i class="fa-solid fa-chevron-right"></i></button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

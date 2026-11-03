@@ -1,0 +1,55 @@
+{
+  "total_readings": 97606,
+  "avg_temp": 35.05,
+  "min_temp": 21.0,
+  "max_temp": 51.0,
+  "std_temp": 5.7,
+  "indoor_count": 20345,
+  "outdoor_count": 77261,
+  "indoor_avg_temp": 30.45,
+  "outdoor_avg_temp": 36.27,
+  "date_min": "2018-07-28 07:06",
+  "date_max": "2018-12-08 09:30",
+  "model_comparison": {
+    "Linear Regression": {
+      "MAE": 3.5443,
+      "MSE": 22.6182,
+      "RMSE": 4.7559,
+      "R2": 0.2149
+    },
+    "Decision Tree Regressor": {
+      "MAE": 2.9637,
+      "MSE": 21.0964,
+      "RMSE": 4.5931,
+      "R2": 0.2677
+    },
+    "Random Forest Regressor": {
+      "MAE": 2.6533,
+      "MSE": 15.9062,
+      "RMSE": 3.9883,
+      "R2": 0.4479
+    }
+  },
+  "feature_importance": {
+    "hour": 0.0029,
+    "day": 0.0265,
+    "month": 0.0331,
+    "day_of_week": 0.0063,
+    "is_weekend": 0.0007,
+    "is_indoor": 0.0799,
+    "hour_sin": 0.0022,
+    "hour_cos": 0.0051,
+    "temp_lag_1": 0.8432
+  },
+  "features": [
+    "hour",
+    "day",
+    "month",
+    "day_of_week",
+    "is_weekend",
+    "is_indoor",
+    "hour_sin",
+    "hour_cos",
+    "temp_lag_1"
+  ]
+}
